@@ -1,0 +1,6 @@
+Changes
+MANIFEST
+Makefile.PL
+XQI.pm
+test.pl
+examples/xqi-query.pl
