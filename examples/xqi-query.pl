@@ -3,7 +3,7 @@
 use GoXML::XQI;
 
 my($xqi) = new GoXML::XQI(
-		HOST => 'xqi.goxml.com',
+		HOST => 'www.goxml.com',
 		PORT => 5910,
 		VERBOSE => 1,
 );

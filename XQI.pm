@@ -13,7 +13,7 @@ use vars qw($VERSION @ISA @EXPORT @EXPORT_OK);
 require Exporter;
 
 @ISA = qw(Exporter AutoLoader);
-$VERSION = '1.1.3';
+$VERSION = '1.1.4';
 
 sub new {
 	my($class) = shift;
@@ -44,7 +44,7 @@ sub Query {
 	
 	$q .= "  <KEYWORD>$info{KEYWORD}</KEYWORD>\n" .
 	      "   <TAG>$info{TAG}</TAG>\n" .
-	      "   <CATEGORY></CATEGORY>\n" .
+	      "   <CATEGORY>$info{CATEGORY}</CATEGORY>\n" .
 	      " </QUERY>\n</GOXML>\n";
 
 	if ($self->{VERBOSE}) {
@@ -113,7 +113,7 @@ sub Submit {
 
 sub _socket {
 	my($self) = shift;
-        my($remote) = $self->{HOST} || 'xqi.goxml.com';
+        my($remote) = $self->{HOST} || 'www.goxml.com';
         my($port) = $self->{PORT} || '5910';
         my($iaddr,$paddr,$proto,$line);
         $iaddr = inet_aton($remote) or croak ($!);
@@ -142,12 +142,13 @@ GoXML::XQI - Perl extension for the XML Query Interface at xqi.goxml.com.
 
   use GoXML::XQI;
   $q = new GoXML::XQI(
-	HOST => 'xqi.goxml.com',
+	HOST => 'www.goxml.com',
 	PORT => '5910',
   );
   $fh = $q->Query(
 		KEYWORD => $keywd,
-		TAG => $tag);
+		TAG => $tag,
+		CATEGORY => $categ);
 
   while (<$fh>) {
 	# Do something with the search results..
@@ -156,16 +157,19 @@ GoXML::XQI - Perl extension for the XML Query Interface at xqi.goxml.com.
   $resp = $q->Submit(
 		HREF => $url,
 		DESCRIPTION => $description,
-		CATEGORY = $category);
+		CATEGORY => $category);
 
   print "Succeeded.\n" if $resp;
 
 =head1 DESCRIPTION
 
 This module was designed to allow authorized third parties to connect
-to the XML index at xqi.goxml.com:5910.  While generally a trivial
+to the XML index at www.goxml.com:5910.  While generally a trivial
 task, this module will stay up to date and backwards compatible with
 newer and older versions of XQI.
+
+Everyone is _authorized_ to use this service, but people who are paying us get
+first priority :).
 
 
 =head1 CATEGORIES
@@ -186,7 +190,7 @@ Below is a list of categories currently accepted by Submit():
 12 = Shopping
 13 = Government
 14 = Society & Culture
-15 = News Groups
+15 = News Groups (XSL-List, ebXML-*, your-list??)
 
 =head1 AUTHOR
 
